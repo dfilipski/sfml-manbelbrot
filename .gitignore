@@ -1,0 +1,14 @@
+# Compiler output
+*.o
+*.d
+*.dSYM/
+
+# Build directory
+/build/
+
+# macOS files
+.DS_Store
+
+# Local editor settings
+/.vscode/
+/.idea/
