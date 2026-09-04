@@ -1,6 +1,6 @@
 #include "Mandelbrot.hpp"
 
-int Mandelbrot::escapeIterations(std::complex<double> c, int maxIterations)
+int Mandelbrot::escapeIterations(std::complex<double> c) const
 {
     std::complex<double> z(0.0, 0.0);
     int iterations = 0;

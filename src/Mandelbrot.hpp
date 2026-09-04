@@ -6,8 +6,13 @@
 class Mandelbrot
 {
 public:
-    int escapeIterations(std::complex<double> c, int maxIterations);
+    Mandelbrot(int maxIterations) : maxIterations(maxIterations)
+    {
+    }
 
+    const int maxIterations;
+
+    int escapeIterations(std::complex<double> c) const;
 private:
 };
 

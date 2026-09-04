@@ -19,8 +19,8 @@ int main(int argc, const char *argv[])
     sf::RenderWindow window(sf::VideoMode({static_cast<unsigned int>(resolutionX), static_cast<unsigned int>(resolutionY)}), "Mandelbrot Set");
     window.setFramerateLimit(60);
 
-    Mandelbrot mandelbrot;
-    MandelbrotRenderer mandelbrotRenderer(mandelbrot);
+    Mandelbrot mandelbrot(500);
+    MandelbrotRenderer mandelbrotRenderer(mandelbrot, resolutionX, resolutionY);
 
     while (window.isOpen())
     {
