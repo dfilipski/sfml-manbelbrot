@@ -22,6 +22,7 @@ public:
 
     void zoom(double factor);
     void resetZoom();
+    void pan(double horizontal, double vertical);
 
 private:
     Mandelbrot mandelbrot;

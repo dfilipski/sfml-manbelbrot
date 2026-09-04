@@ -44,7 +44,22 @@ int main(int argc, const char *argv[])
                 {
                     mandelbrotRenderer.zoom(1.1);
                 }
-                
+                else if (keyPressed->code == sf::Keyboard::Key::Left)
+                {
+                    mandelbrotRenderer.pan(-0.1, 0);
+                }
+                else if (keyPressed->code == sf::Keyboard::Key::Right)
+                {
+                    mandelbrotRenderer.pan(0.1, 0);
+                }
+                else if (keyPressed->code == sf::Keyboard::Key::Up)
+                {
+                    mandelbrotRenderer.pan(0, 0.1);
+                }
+                else if (keyPressed->code == sf::Keyboard::Key::Down)
+                {
+                    mandelbrotRenderer.pan(0, -0.1);
+                }
             }
         }
 
