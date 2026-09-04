@@ -8,12 +8,13 @@ LDLIBS := -lsfml-graphics -lsfml-window -lsfml-system
 
 TARGET := build/mandelbrot
 SOURCES := $(wildcard src/*.cpp)
+HEADERS := $(wildcard src/*.hpp src/*.h)
 
 .PHONY: all run clean
 
 all: $(TARGET)
 
-$(TARGET): $(SOURCES) Makefile
+$(TARGET): $(SOURCES) $(HEADERS) Makefile
 	mkdir -p $(@D)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SOURCES) -o $@ $(LDFLAGS) $(LDLIBS)
 
