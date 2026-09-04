@@ -1,6 +1,9 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+#include "Mandelbrot.hpp"
+#include "MandelbrotRenderer.hpp"
+
 int main(int argc, const char *argv[])
 {
     std::cout << argc << std ::endl;
@@ -16,9 +19,8 @@ int main(int argc, const char *argv[])
     sf::RenderWindow window(sf::VideoMode({static_cast<unsigned int>(resolutionX), static_cast<unsigned int>(resolutionY)}), "Mandelbrot Set");
     window.setFramerateLimit(60);
 
-    sf::RectangleShape rectangle({100, 100});
-    rectangle.setFillColor(sf::Color::Green);
-    rectangle.setPosition({500, 500});
+    Mandelbrot mandelbrot;
+    MandelbrotRenderer mandelbrotRenderer(mandelbrot);
 
     while (window.isOpen())
     {
@@ -34,7 +36,7 @@ int main(int argc, const char *argv[])
         window.clear(sf::Color(80, 80, 80));
 
         // Draw
-        window.draw(rectangle);
+        window.draw(mandelbrotRenderer);
 
         // Update the window
         window.display();
