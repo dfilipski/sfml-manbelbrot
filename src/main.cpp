@@ -3,7 +3,17 @@
 
 int main(int argc, const char *argv[])
 {
-    sf::RenderWindow window(sf::VideoMode({1000, 1000}), "Mandelbrot Set");
+    std::cout << argc << std ::endl;
+    int resolutionX = 1000;
+    int resolutionY = 1000;
+
+    if (argc == 3)
+    {
+        resolutionX = std::stoi(argv[1]);
+        resolutionY = std::stoi(argv[2]);
+    }
+
+    sf::RenderWindow window(sf::VideoMode({static_cast<unsigned int>(resolutionX), static_cast<unsigned int>(resolutionY)}), "Mandelbrot Set");
     window.setFramerateLimit(60);
 
     sf::RectangleShape rectangle({100, 100});
