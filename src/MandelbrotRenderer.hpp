@@ -2,7 +2,6 @@
 #define MANDELBROT_RENDERER_H
 
 #include <SFML/Graphics.hpp>
-#include <complex>
 
 #include "Mandelbrot.hpp"
 
@@ -14,7 +13,9 @@ public:
           width(width),
           height(height),
           texture(sf::Vector2u{this->width, this->height}),
-          mandelbrotSet(texture)
+          mandelbrotSet(texture),
+          realPartStep((maxRealPart - minRealPart) / static_cast<double>(width)),
+          imaginaryPartStep((maxImaginaryPart - minImaginaryPart) / static_cast<double>(height))
     {
         renderMandlebrotSet();
     }
@@ -31,9 +32,11 @@ private:
     sf::Texture texture;
     sf::Sprite mandelbrotSet;
 
+    const double realPartStep;
+    const double imaginaryPartStep;
+
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-    std::complex<double> getNumberForPixel(int x, int y) const;
     sf::Color getColorForIterations(int iterations) const;
 
     void renderMandlebrotSet();

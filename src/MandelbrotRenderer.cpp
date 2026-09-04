@@ -8,15 +8,6 @@ void MandelbrotRenderer::draw(sf::RenderTarget &target, sf::RenderStates states)
     target.draw(mandelbrotSet);
 }
 
-std::complex<double> MandelbrotRenderer::getNumberForPixel(int x, int y) const
-{
-    double a = minRealPart + static_cast<double>(x) / static_cast<double>(width) * (maxRealPart - minRealPart);
-    double b = maxImaginaryPart - static_cast<double>(y) / static_cast<double>(height) * (maxImaginaryPart - minImaginaryPart);
-    std::complex<double> c(a, b);
-
-    return c;
-}
-
 sf::Color MandelbrotRenderer::getColorForIterations(int iterations) const
 {
     if (iterations == mandelbrot.maxIterations)
@@ -50,17 +41,23 @@ void MandelbrotRenderer::renderMandlebrotSet()
 
     for (unsigned int y = 0; y < height; y++)
     {
+        double b = maxImaginaryPart - y * imaginaryPartStep;
+        double a = minRealPart;
+
         for (unsigned int x = 0; x < width; x++)
         {
-            std::size_t index = (y * width + x) * 4;
-            std::complex<double> number = getNumberForPixel(x, y);
-            int iterations = mandelbrot.escapeIterations(number);
-            sf::Color color = getColorForIterations(iterations);
+            
+            int iterations = mandelbrot.escapeIterations(a,b);
 
+            std::size_t index = (y * width + x) * 4;
+            sf::Color color = getColorForIterations(iterations);
             pixels[index] = color.r;
             pixels[index + 1] = color.g;
             pixels[index + 2] = color.b;
             pixels[index + 3] = color.a;
+
+            // Take a step
+            a += realPartStep;
         }
     }
 
