@@ -20,20 +20,27 @@ public:
         renderMandlebrotSet();
     }
 
+    void zoom(double factor);
+    void resetZoom();
+
 private:
     Mandelbrot mandelbrot;
-    const double minRealPart = -2.5;
-    const double maxRealPart = 1.0;
-    const double minImaginaryPart = -1.2;
-    const double maxImaginaryPart = 1.2;
+    const double defeaultMinRealPart = -2.5;
+    const double defeaultMaxRealPart = 1.0;
+    const double defeaultMinImaginaryPart = -1.2;
+    const double defeaultMaxImaginaryPart = 1.2;
+    double minRealPart = -2.5;
+    double maxRealPart = 1.0;
+    double minImaginaryPart = -1.2;
+    double maxImaginaryPart = 1.2;
     const unsigned int width;
     const unsigned int height;
 
     sf::Texture texture;
     sf::Sprite mandelbrotSet;
 
-    const double realPartStep;
-    const double imaginaryPartStep;
+    double realPartStep;
+    double imaginaryPartStep;
 
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 

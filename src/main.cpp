@@ -19,9 +19,6 @@ int main(int argc, const char *argv[])
     sf::RenderWindow window(sf::VideoMode({static_cast<unsigned int>(resolutionX), static_cast<unsigned int>(resolutionY)}), "Mandelbrot Set");
     window.setFramerateLimit(60);
 
-    sf::View view = window.getDefaultView();
-    sf::View defaultView = view;
-
     Mandelbrot mandelbrot(500);
     MandelbrotRenderer mandelbrotRenderer(mandelbrot, resolutionX, resolutionY);
 
@@ -33,35 +30,21 @@ int main(int argc, const char *argv[])
             {
                 window.close();
             }
-            else if (const auto *scroll = event->getIf<sf::Event::MouseWheelScrolled>())
+            else if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>())
             {
-                if (scroll->wheel == sf::Mouse::Wheel::Vertical)
+                if (keyPressed->code == sf::Keyboard::Key::Space)
                 {
-
-                    // Get the mouse position
-                    sf::Vector2i mousePixelPos = {scroll->position.x, scroll->position.y};
-                    sf::Vector2f mouseWorldPosBefore = window.mapPixelToCoords(mousePixelPos, view);
-
-                    // Apply Zoom factor
-                    float zoomFactor = (scroll->delta > 0) ? 0.9f : 1.1f;
-                    view.zoom(zoomFactor);
-
-                    // Temporarily update the window to calculate new mouse position
-                    window.setView(view);
-                    sf::Vector2f mouseWorldPosAfter = window.mapPixelToCoords(mousePixelPos, view);
-
-                    // Shift the view to offset the movement
-                    sf::Vector2f offset = mouseWorldPosBefore - mouseWorldPosAfter;
-                    view.move(offset);
-
-                    // Apply the final view
-                    window.setView(view);
+                    mandelbrotRenderer.resetZoom();
                 }
-            }
-            else if (const auto *keyPress = event->getIf<sf::Event::KeyPressed>())
-            {
-                view = defaultView;
-                window.setView(view);
+                else if (keyPressed->code == sf::Keyboard::Key::Equal)
+                {
+                    mandelbrotRenderer.zoom(0.9);
+                }
+                else if (keyPressed->code == sf::Keyboard::Key::Hyphen)
+                {
+                    mandelbrotRenderer.zoom(1.1);
+                }
+                
             }
         }
 

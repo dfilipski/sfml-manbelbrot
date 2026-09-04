@@ -2,7 +2,7 @@ CXX := clang++
 SFML_PREFIX := $(shell brew --prefix sfml)
 
 CPPFLAGS := -I$(SFML_PREFIX)/include
-CXXFLAGS := -std=c++17 -Wall -Wextra -g
+CXXFLAGS := -std=c++17 -Wall -Wextra -O3
 LDFLAGS := -L$(SFML_PREFIX)/lib -Wl,-rpath,$(SFML_PREFIX)/lib
 LDLIBS := -lsfml-graphics -lsfml-window -lsfml-system
 

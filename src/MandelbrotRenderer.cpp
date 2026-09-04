@@ -10,28 +10,13 @@ void MandelbrotRenderer::draw(sf::RenderTarget &target, sf::RenderStates states)
 
 sf::Color MandelbrotRenderer::getColorForIterations(int iterations) const
 {
+    sf::Color color = sf::Color::Black;
     if (iterations == mandelbrot.maxIterations)
     {
-        return sf::Color::Black;
-    }
-    if (iterations <= 3)
-    {
-        return sf::Color::Blue;
-    }
-    if (iterations <= 15)
-    {
-        return sf::Color(255, 165, 0, 255);
-    }
-    if (iterations <= 40)
-    {
-        return sf::Color::Yellow;
-    }
-    if (iterations <= 100)
-    {
-        return sf::Color::Red;
+        return color;
     }
 
-    return sf::Color::White;
+    return color + sf::Color(iterations, iterations, iterations);
 }
 
 void MandelbrotRenderer::renderMandlebrotSet()
@@ -46,8 +31,8 @@ void MandelbrotRenderer::renderMandlebrotSet()
 
         for (unsigned int x = 0; x < width; x++)
         {
-            
-            int iterations = mandelbrot.escapeIterations(a,b);
+
+            int iterations = mandelbrot.escapeIterations(a, b);
 
             std::size_t index = (y * width + x) * 4;
             sf::Color color = getColorForIterations(iterations);
@@ -62,4 +47,28 @@ void MandelbrotRenderer::renderMandlebrotSet()
     }
 
     texture.update(pixels.data());
+}
+
+void MandelbrotRenderer::zoom(double factor)
+{
+    minRealPart *= factor;
+    maxRealPart *= factor;
+    minImaginaryPart *= factor;
+    maxImaginaryPart *= factor;
+
+    realPartStep = (maxRealPart - minRealPart) / static_cast<double>(width);
+    imaginaryPartStep = (maxImaginaryPart - minImaginaryPart) / static_cast<double>(height);
+    renderMandlebrotSet();
+}
+
+void MandelbrotRenderer::resetZoom()
+{
+    minRealPart = defeaultMinRealPart;
+    maxRealPart = defeaultMaxRealPart;
+    minImaginaryPart = defeaultMinImaginaryPart;
+    maxImaginaryPart = defeaultMaxImaginaryPart;
+    
+    realPartStep = (maxRealPart - minRealPart) / static_cast<double>(width);
+    imaginaryPartStep = (maxImaginaryPart - minImaginaryPart) / static_cast<double>(height);
+    renderMandlebrotSet();
 }
