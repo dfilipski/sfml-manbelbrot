@@ -11,9 +11,12 @@ class MandelbrotRenderer : public sf::Drawable
 public:
     MandelbrotRenderer(Mandelbrot mandelbrot, int width, int height)
         : mandelbrot(mandelbrot),
-          width(width), 
-          height(height)
+          width(width),
+          height(height),
+          texture(sf::Vector2u{this->width, this->height}),
+          mandelbrotSet(texture)
     {
+        renderMandlebrotSet();
     }
 
 private:
@@ -25,10 +28,15 @@ private:
     const unsigned int width;
     const unsigned int height;
 
+    sf::Texture texture;
+    sf::Sprite mandelbrotSet;
+
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
     std::complex<double> getNumberForPixel(int x, int y) const;
     sf::Color getColorForIterations(int iterations) const;
+
+    void renderMandlebrotSet();
 };
 
 #endif // MANDELBROT_RENDERER_H
