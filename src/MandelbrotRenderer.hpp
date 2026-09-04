@@ -18,6 +18,7 @@ public:
           imaginaryPartStep((maxImaginaryPart - minImaginaryPart) / static_cast<double>(height))
     {
         renderMandlebrotSet();
+        pixels = std::vector<uint8_t>(width * height * 4);
     }
 
     void zoom(double factor);
@@ -42,6 +43,8 @@ private:
 
     double realPartStep;
     double imaginaryPartStep;
+
+    std::vector<std::uint8_t> pixels;
 
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
