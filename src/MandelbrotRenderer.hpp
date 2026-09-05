@@ -30,13 +30,8 @@ private:
     const unsigned int width;
     const unsigned int height;
 
-
-
     sf::Shader shader;
     sf::RectangleShape rectangle;
-
-
-    std::vector<std::uint8_t> pixels;
 
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
