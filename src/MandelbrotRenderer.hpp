@@ -15,7 +15,8 @@ public:
           texture(sf::Vector2u{this->width, this->height}),
           mandelbrotSet(texture),
           realPartStep((maxRealPart - minRealPart) / static_cast<double>(width)),
-          imaginaryPartStep((maxImaginaryPart - minImaginaryPart) / static_cast<double>(height))
+          imaginaryPartStep((maxImaginaryPart - minImaginaryPart) / static_cast<double>(height)),
+          needsRender(false)
     {
         renderMandlebrotSet();
         pixels = std::vector<uint8_t>(width * height * 4);
@@ -24,6 +25,7 @@ public:
     void zoom(double factor);
     void resetZoom();
     void pan(double horizontal, double vertical);
+    void renderIfNeeded();
 
 private:
     Mandelbrot mandelbrot;
@@ -43,6 +45,8 @@ private:
 
     double realPartStep;
     double imaginaryPartStep;
+
+    bool needsRender;
 
     std::vector<std::uint8_t> pixels;
 

@@ -58,7 +58,7 @@ void MandelbrotRenderer::zoom(double factor)
 
     realPartStep = (maxRealPart - minRealPart) / static_cast<double>(width);
     imaginaryPartStep = (maxImaginaryPart - minImaginaryPart) / static_cast<double>(height);
-    renderMandlebrotSet();
+    needsRender = true;
 }
 
 void MandelbrotRenderer::resetZoom()
@@ -70,7 +70,7 @@ void MandelbrotRenderer::resetZoom()
 
     realPartStep = (maxRealPart - minRealPart) / static_cast<double>(width);
     imaginaryPartStep = (maxImaginaryPart - minImaginaryPart) / static_cast<double>(height);
-    renderMandlebrotSet();
+    needsRender = true;
 }
 
 void MandelbrotRenderer::pan(double horizontal, double vertical)
@@ -82,5 +82,14 @@ void MandelbrotRenderer::pan(double horizontal, double vertical)
 
     realPartStep = (maxRealPart - minRealPart) / static_cast<double>(width);
     imaginaryPartStep = (maxImaginaryPart - minImaginaryPart) / static_cast<double>(height);
-    renderMandlebrotSet();
+    needsRender = true;
+}
+
+void MandelbrotRenderer::renderIfNeeded()
+{
+    if (needsRender)
+    {
+        renderMandlebrotSet();
+        needsRender = false;
+    }
 }

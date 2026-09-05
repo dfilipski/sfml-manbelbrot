@@ -66,7 +66,8 @@ int main(int argc, const char *argv[])
         // Clear the Screen
         window.clear(sf::Color::Black);
 
-        // Draw
+        // RenderIfNeeded and Draw
+        mandelbrotRenderer.renderIfNeeded();
         window.draw(mandelbrotRenderer);
 
         // Update the window
