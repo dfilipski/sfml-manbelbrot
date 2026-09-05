@@ -3,32 +3,22 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Mandelbrot.hpp"
-
 class MandelbrotRenderer : public sf::Drawable
 {
 public:
-    MandelbrotRenderer(Mandelbrot mandelbrot, int width, int height)
-        : mandelbrot(mandelbrot),
+    MandelbrotRenderer(int width, int height) : 
           width(width),
-          height(height),
-          texture(sf::Vector2u{this->width, this->height}),
-          mandelbrotSet(texture),
-          realPartStep((maxRealPart - minRealPart) / static_cast<double>(width)),
-          imaginaryPartStep((maxImaginaryPart - minImaginaryPart) / static_cast<double>(height)),
-          needsRender(false)
+          height(height)
     {
-        renderMandlebrotSet();
-        pixels = std::vector<uint8_t>(width * height * 4);
+        loadShader("shaders/mandelbrot.frag");
+        rectangle = sf::RectangleShape({static_cast<float>(width), static_cast<float>(height)});
     }
 
     void zoom(double factor);
     void resetZoom();
     void pan(double horizontal, double vertical);
-    void renderIfNeeded();
 
 private:
-    Mandelbrot mandelbrot;
     const double defeaultMinRealPart = -2.5;
     const double defeaultMaxRealPart = 1.0;
     const double defeaultMinImaginaryPart = -1.2;
@@ -40,21 +30,18 @@ private:
     const unsigned int width;
     const unsigned int height;
 
-    sf::Texture texture;
-    sf::Sprite mandelbrotSet;
 
-    double realPartStep;
-    double imaginaryPartStep;
 
-    bool needsRender;
+    sf::Shader shader;
+    sf::RectangleShape rectangle;
+
 
     std::vector<std::uint8_t> pixels;
 
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-    sf::Color getColorForIterations(int iterations) const;
-
-    void renderMandlebrotSet();
+    void loadShader(const char *filePath);
+    void updateShaderBounds();
 };
 
 #endif // MANDELBROT_RENDERER_H

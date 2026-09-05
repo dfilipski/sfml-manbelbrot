@@ -1,7 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-#include "Mandelbrot.hpp"
 #include "MandelbrotRenderer.hpp"
 
 int main(int argc, const char *argv[])
@@ -19,8 +18,7 @@ int main(int argc, const char *argv[])
     sf::RenderWindow window(sf::VideoMode({static_cast<unsigned int>(resolutionX), static_cast<unsigned int>(resolutionY)}), "Mandelbrot Set");
     window.setFramerateLimit(60);
 
-    Mandelbrot mandelbrot(500);
-    MandelbrotRenderer mandelbrotRenderer(mandelbrot, resolutionX, resolutionY);
+    MandelbrotRenderer mandelbrotRenderer(resolutionX, resolutionY);
 
     while (window.isOpen())
     {
@@ -38,27 +36,27 @@ int main(int argc, const char *argv[])
                 }
                 else if (keyPressed->code == sf::Keyboard::Key::Equal)
                 {
-                    mandelbrotRenderer.zoom(0.9);
+                    mandelbrotRenderer.zoom(0.99);
                 }
                 else if (keyPressed->code == sf::Keyboard::Key::Hyphen)
                 {
-                    mandelbrotRenderer.zoom(1.1);
+                    mandelbrotRenderer.zoom(1.01);
                 }
                 else if (keyPressed->code == sf::Keyboard::Key::Left)
                 {
-                    mandelbrotRenderer.pan(-0.1, 0);
+                    mandelbrotRenderer.pan(-0.01, 0);
                 }
                 else if (keyPressed->code == sf::Keyboard::Key::Right)
                 {
-                    mandelbrotRenderer.pan(0.1, 0);
+                    mandelbrotRenderer.pan(0.01, 0);
                 }
                 else if (keyPressed->code == sf::Keyboard::Key::Up)
                 {
-                    mandelbrotRenderer.pan(0, 0.1);
+                    mandelbrotRenderer.pan(0, 0.01);
                 }
                 else if (keyPressed->code == sf::Keyboard::Key::Down)
                 {
-                    mandelbrotRenderer.pan(0, -0.1);
+                    mandelbrotRenderer.pan(0, -0.01);
                 }
             }
         }
@@ -66,8 +64,7 @@ int main(int argc, const char *argv[])
         // Clear the Screen
         window.clear(sf::Color::Black);
 
-        // RenderIfNeeded and Draw
-        mandelbrotRenderer.renderIfNeeded();
+        // Draw
         window.draw(mandelbrotRenderer);
 
         // Update the window
